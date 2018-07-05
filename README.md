@@ -1,3 +1,3 @@
 # hello-world
 
-# I love studying. Studying makes me happy. 
+I love studying. Studying makes me happy. 
