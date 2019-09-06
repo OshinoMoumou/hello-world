@@ -13,7 +13,7 @@ import math
 
 ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(math.floor(n/10)%10!=1)*(n%10<4)*n%10::4])
 
-sim_num = 50000
+sim_num = 5000
 
 def seven_random(n):
     num = 0
@@ -30,14 +30,23 @@ def seven_random(n):
 def simulate(dk):
     lp = [0, 0, 0, 0, 0, 0, 0, 0]
     for inspectaser in range(0, sim_num):
-        a = [0,0,0,1,0,0,0,1]
-        for i in range(0, dk):
-            grave = len(a)
+        if False:
+            if inspectaser % 100 == 0:
+                print(inspectaser)
+        num_939 = 2
+        num_113 = 6
+        for i in range(0, dk - 1):
+            grave = num_939 + num_113
             position = seven_random(grave)
             for n in position:
-                a.append(a[n])
-        lanpang = sum(a[(len(a) - 7):(len(a))])
-        lp[lanpang] = lp[lanpang] + 1
+                if n < num_939:
+                    num_939 = num_939 + 1
+                    num_113 = num_113 + 3
+                else:
+                    num_113 = num_113 + 1
+        grave = num_939 + num_113
+        revive = sum(np.array(seven_random(grave)) < num_939)
+        lp[revive] = lp[revive] + 1
     return np.array(lp) / sim_num
 
 def draw(dk):
@@ -53,5 +62,22 @@ def draw(dk):
     plt.savefig("quanzhen%d.jpg"%dk)
 
 if __name__ == '__main__':
-    for dk in [1, 2, 3, 5, 10, 100, 1000]:
-        draw(dk)
+    if False:#计算第n个dk的结果
+        for dk in [1, 2, 3, 5, 10, 100, 1000]:
+            draw(1000)
+    if True:#计算各个DK数量的全针概率
+        quanzhen = []
+        X = []
+        for dk in range(1,100):
+            print(dk)
+            quanzhen.append(simulate(dk)[0])
+            X.append(dk)
+        fig = plt.figure()
+        plt.plot(X,quanzhen)
+        plt.xlabel("Number of DK")
+        plt.ylabel("Probability")
+        plt.title("Distribution of All 113")
+        #for a,b in zip(X,quanzhen):  
+        #    plt.text(a, b, '%.3f' % b, ha='center', va= 'bottom',fontsize=11)
+        plt.savefig("distribution%d.jpg"%dk)
+        
